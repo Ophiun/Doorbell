@@ -14,45 +14,43 @@ import {
   View,
   Text,
   StatusBar,
+  Button
 } from 'react-native';
 
 
 import Footer from './components/Footer'; 
 import StreamScreen from './screens/StreamScreen';
-
+import LibraryScreen from './screens/LibraryScreen'; 
+import SettingsScreen from './screens/SettingsScreen';
 export default function App() {
-  const [userNumber, setUserNumber] = useState();
-  const [guessRounds, setGuessRounds] = useState(0)
+
+  const [activeScreen, setActiveScreen] = useState(0)
   /*
   const startGameHandler = (selectedNumber) => {
     setUserNumber(selectedNumber);
   };
 
-  const gameOverHandler = (numOfRounds) => {
-    setGuessRounds(numOfRounds); 
-  };
+  
 
-  let content = 
-    <StartGameScreen 
-      onStartGame={startGameHandler}
-    />;
-
-  if (userNumber && guessRounds <= 0){
-    content = 
-      <GameScreen 
-        userChoice={userNumber}
-        onGameOver={gameOverHandler}
-      />;
-  }else if (guessRounds > 0){
-    content = 
-      <GameOverScreen/>;
-  }
   */
+  const screenHandler = () => {
+    setActiveScreen(curActive => curActive + 1); 
+    if (activeScreen === 3) setActiveScreen(0);
+  };
   let content = <StreamScreen/>
+
+  if (activeScreen === 0){
+    content = <StreamScreen/>;
+  }else if (activeScreen === 1){
+    content = <SettingsScreen/>;
+  }else if (activeScreen === 2){
+    content = <LibraryScreen/>;
+  };
 
   return (
     <View style={styles.screen}>
       <Footer/>
+      <Button title="NEXT SCREEN" onPress={screenHandler}/>
       {content}
     </View>
   );
