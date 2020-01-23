@@ -15,7 +15,7 @@ const ImageButton = props => {
                     source={props.source}
                     style={styles.image}
                 >
-                    <View style={styles.text}>
+                    <View style={styles.textContainer}>
                         <Text>
                             {props.children}
                         </Text>
@@ -39,13 +39,12 @@ const styles = StyleSheet.create({
         height: 100, 
         overflow: 'hidden', 
         marginVertical: 30,
-        margin: 50
     }, 
-    text: {
+    textContainer:{
         justifyContent: 'center', 
-        flex: 1, 
         alignItems: 'center', 
-        flexWrap: 'wrap'
+        flex: 1, 
+        
     }
 });
 
