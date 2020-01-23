@@ -1,27 +1,17 @@
 import React from 'react'; 
 import {View, Text, StyleSheet, Button} from 'react-native'; 
 
+import ImageButton from '../components/ImageButton';
+
 const StreamScreen = props => {
 
     return(
         <View style={styles.screen}>
             <Text>This is the stream view</Text>
             <View style={styles.buttonContainer}>
-                <Button 
-                    title="SNAPSHOT" 
-                    // bind(objectReferringTo, first argument by function)
-                    
-                />
-                <Button 
-                    title="UNLOCK" 
-                    // bind(objectReferringTo, first argument by function)
-                    
-                />
-                <Button 
-                    title="SPEAK" 
-                    // bind(objectReferringTo, first argument by function)
-                    
-                />
+                <ImageButton>SNAPSHOT</ImageButton>
+                <ImageButton>HOLD TO SPEAK</ImageButton>
+                <ImageButton>UNLOCK</ImageButton>
             </View>
         </View>
     );
@@ -36,9 +26,9 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row', 
         justifyContent: 'space-around', 
-        marginTop: 20, 
-        width: 300, 
-        maxWidth: '80%'
+        marginRight: 30, 
+         
+        maxWidth: '80%', 
     },
 }); 
 
