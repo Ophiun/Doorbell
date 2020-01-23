@@ -1,28 +1,23 @@
 import React from 'react'; 
 import {View, Text, StyleSheet, Button} from 'react-native'; 
 
+import ImageButton from '../components/ImageButton';
+
+
 const SettingsScreen = props => {
 
     return(
         <View style={styles.screen}>
-            <Text>This is the SETTINGS SCREEN</Text>
+            <Text>This is the stream view</Text>
             <View style={styles.buttonContainer}>
-                <Button 
-                    title="SNAPSHOT" 
-                    // bind(objectReferringTo, first argument by function)
-                />
-                <Button 
-                    title="UNLOCK" 
-                    // bind(objectReferringTo, first argument by function)  
-                />
-                <Button 
-                    title="SPEAK" 
-                    // bind(objectReferringTo, first argument by function)
-                />
+                <ImageButton>SNAPSHOT</ImageButton>
+                <ImageButton>SPEAK</ImageButton>
+                <ImageButton>UNLOCK</ImageButton>
             </View>
         </View>
     );
 }
+
 
 const styles = StyleSheet.create({
     screen: {
@@ -31,10 +26,10 @@ const styles = StyleSheet.create({
         alignItems: 'center' 
     }, 
     buttonContainer: {
-        flexDirection: 'row', 
+        flexDirection: 'column', 
         justifyContent: 'space-around', 
         marginTop: 20, 
-        width: 300, 
+        width: 100, 
         maxWidth: '80%'
     },
 }); 

@@ -1,6 +1,8 @@
 import React from 'react'; 
 import {View, Text, StyleSheet, Button} from 'react-native'; 
 
+import ImageButton from '../components/ImageButton';
+
 const LibraryScreen = props => {
 
     return(
