@@ -3,6 +3,8 @@ import {View, Text, StyleSheet, Button} from 'react-native';
 
 import ImageButton from '../components/ImageButton';
 
+import Video from 'react-native-video';
+
 const StreamScreen = props => {
 
     return(

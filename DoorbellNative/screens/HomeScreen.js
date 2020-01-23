@@ -13,16 +13,14 @@ const HomeScreen = props => {
                     source={require('../assets/cam.png')}
                     onPress={() => {props.navigation.navigate({routeName: 'Stream'})}}
                 />
-               
                 <ImageButton
                     source={require('../assets/lib.png')}
-                    onPress={() => {props.navigation.navigate({routeName: 'Library'})}}
+                    onPress={() => {props.navigation.navigate({routeName: 'Video'})}}
                 />
                 <ImageButton
                     source={require('../assets/cog.png')}
                     onPress={() => {props.navigation.navigate({routeName: 'Settings'})}}
                 />
-               
             </View>
         </View>
     );
