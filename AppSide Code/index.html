@@ -1,0 +1,42 @@
+<html>
+
+<body>
+    <script src="http://cdn.shinobi.video/js/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <!--Special JSMPEG Start-->
+    <!--You need this version. Check for updates here https://github.com/ShinobiCCTV/jsmpeg-pipe -->
+    <script src="http://cdn.shinobi.video/js/jsmpeg.pipe.js"></script>
+    <!--Special JSMPEG End-->
+    <canvas id="canvas" height=240 width=320></canvas>
+    <script>
+        //start socket.io client connection
+        var socket = io('http://127.0.0.1:3000');
+        
+        // initiate a player that can be piped to.
+        var player = new JSMpeg.Player('pipe', {
+            canvas: document.getElementById('canvas'),
+            autoplay:true
+        });
+
+        socket.on('connection', () => {
+            console.log("Connection has been established")
+            socket.emit('stream_request');
+        })
+
+        socket.on('data', (data) => {
+            //console.log("Data received")
+            console.log("video write");
+            player.write(data)
+        })
+
+        socket.on('end', () => {
+            console.log('Streaming server has closed')
+            client.end();
+        })
+
+
+
+    </script>
+</body>
+
+</html>>

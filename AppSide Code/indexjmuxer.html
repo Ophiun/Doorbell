@@ -1,0 +1,49 @@
+<html>
+
+<head>
+    <script src="http://cdn.shinobi.video/js/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <!--Special JSMPEG Start-->
+    <!--You need this version. Check for updates here https://github.com/ShinobiCCTV/jsmpeg-pipe -->
+    <!-- <script src="http://cdn.shinobi.video/js/jsmpeg.pipe.js"></script> -->
+    <script type="text/javascript" src="node_modules/jmuxer/dist/jmuxer.min.js"></script>
+</head>
+
+<body>
+
+    <video id="player" height=180 width=240></video>
+    <script>
+        //start socket.io client connection
+        var socket = io('http://127.0.0.1:3000');
+
+        // initiate a player that can be piped to.
+        var jmuxer = new JMuxer({
+            node: 'player',
+            mode: 'video',
+            flushingTime: 1000,
+            fps: 24,
+            debug: true
+        });
+        socket.on('connection', () => {
+            console.log("Connection has been established")
+        })
+
+        socket.on('data', (data) => {
+            //console.log("Data received")
+            console.log("video write");
+            jmuxer.feed({
+                video: new Uint8Array(data)    
+            })
+        })
+
+        socket.on('end', () => {
+            console.log('Streaming server has closed')
+            client.end();
+        })
+
+
+
+    </script>
+</body>
+
+</html>>
