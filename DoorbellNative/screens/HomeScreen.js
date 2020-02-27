@@ -5,13 +5,18 @@ import ImageButton from '../components/ImageButton';
 
 const HomeScreen = props => {
 
+    // Create Websocket
     return(
         <View style={styles.screen}>
             
             <View style={styles.buttonContainer}>
                 <ImageButton
                     source={require('../assets/cam.png')}
-                    onPress={() => {props.navigation.navigate({routeName: 'Stream'})}}
+                    onPress={() => {
+                        props.navigation.navigate({routeName: 'Stream'})
+                        
+                    }}
+                
                 />
                 <ImageButton
                     source={require('../assets/lib.png')}

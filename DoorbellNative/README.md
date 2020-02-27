@@ -20,3 +20,21 @@ npm start   //Starts the expo server
 
 /screens 
 -> Different menus. Similar to what you see 
+
+
+## TODO 
+
+
+i.      Integrate socket io 
+ii.     Rewrite code to handle props for socket io 
+iii.    understand how to pass objects in the navigator 
+iv.     Understand how react runs stuff in the background 
+v.      Learn how to use JSON and output data
+
+### Integration 
+i. Rewrite the Navigator to handle props 
+ii. 
+
+### Install Packages 
+i. socket.io 
+
