@@ -12,6 +12,7 @@ export default class App extends React.Component {
     connect() {
         // Return Socket.io Object 
         this.socket = io('https://192.168.0.108:9000');   
+        this.socket.emit('Hi DICK');
         this.socket.on ('button_press', () => {
             // handle code 
             // throw push 

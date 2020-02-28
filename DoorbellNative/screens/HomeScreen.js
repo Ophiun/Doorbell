@@ -6,11 +6,30 @@ import ImageButton from '../components/ImageButton';
 export default class HomeScreen extends React.Component {
     
     // Constructor 
-    constructor (props) {
-        super(props);
-        //this.state = {
-        //};
+    constructor(props){
+        super(props); 
+
+         
     }
+    componentDidMount () {
+        this.connect();
+
+    }
+
+    connect() {
+        // Return Socket.io Object 
+        this.socket = io('https://192.168.0.108:9000');   
+        this.socket.emit('Hi DICK');
+        this.socket.on ('button_press', () => {
+            // handle code 
+            // throw push 
+            // Ack 
+            this.socket.emit('button_confirmed'); 
+        });
+    }
+    componentWillUnmount () {
+        this.socket.close();
+    }  
 
     // Create Websocket
     render(){
