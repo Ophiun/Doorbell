@@ -23,40 +23,20 @@ import Footer from './components/Footer';
 import StreamScreen from './screens/StreamScreen';
 import LibraryScreen from './screens/LibraryScreen'; 
 import SettingsScreen from './screens/SettingsScreen';
-export default function App() {
-  /*
-  const [activeScreen, setActiveScreen] = useState(0)
 
-  const screenHandler = () => {
-    setActiveScreen(curActive => curActive + 1); 
-    f (activeScreen === 3) setActiveScreen(0);
-  };
-  let content = <StreamScreen/>
+export default class App extends React.Component {
 
-  if (activeScreen === 0){
-    content = <StreamScreen/>;
-  }else if (activeScreen === 1){
-    content = <SettingsScreen/>;
-  }else if (activeScreen === 2){
-    content = <LibraryScreen/>;
-  };
-  */
-  /*
-  return (
-    <View style={styles.screen}>
-      <Footer/>
-      <Button title="NEXT SCREEN" onPress={screenHandler}/>
-      {content}
-    </View>
-  );
-  */
+  // Create websocket 
+  constructor(props){
+    super(props);
+  }
+  render(){
+    return (
+      <Navigator /> 
+    );
+  }
 
-  return (
-    <Navigator /> 
-  );
 }
-
-
 
 const styles = StyleSheet.create({
   screen: {

@@ -4,18 +4,26 @@ import {View, Text, StyleSheet, Button} from 'react-native';
 import ImageButton from '../components/ImageButton';
 
 
-const SettingsScreen = props => {
+export default class SettingsScreen extends React.Component {
+    constructor(props){
+        super(props);
+    }
 
-    return(
-        <View style={styles.screen}>
-            <Text>This is the stream view</Text>
-            <View style={styles.buttonContainer}>
-                <ImageButton>SNAPSHOT</ImageButton>
-                <ImageButton>SPEAK</ImageButton>
-                <ImageButton>UNLOCK</ImageButton>
+    
+
+    render() {
+        return(
+            <View style={styles.screen}>
+                <Text>This is the stream view</Text>
+                <View style={styles.buttonContainer}>
+                    <ImageButton onPress= {() => this.props.navigation.goBack()} > {this.props.navigation.state.params.name} </ImageButton>
+                    <ImageButton>SPEAK</ImageButton>
+                    <ImageButton>UNLOCK</ImageButton>
+                </View>
             </View>
-        </View>
-    );
+        );
+    }
+
 }
 
 
@@ -34,4 +42,4 @@ const styles = StyleSheet.create({
     },
 }); 
 
-export default SettingsScreen; 
+//export default SettingsScreen; 

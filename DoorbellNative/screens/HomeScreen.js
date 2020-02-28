@@ -3,32 +3,39 @@ import {View, Text, StyleSheet, Button} from 'react-native';
 
 import ImageButton from '../components/ImageButton';
 
-const HomeScreen = props => {
+export default class HomeScreen extends React.Component {
+    
+    // Constructor 
+    constructor (props) {
+        super(props);
+        //this.state = {
+        //};
+    }
 
     // Create Websocket
-    return(
-        <View style={styles.screen}>
-            
-            <View style={styles.buttonContainer}>
-                <ImageButton
-                    source={require('../assets/cam.png')}
-                    onPress={() => {
-                        props.navigation.navigate({routeName: 'Stream'})
-                        
-                    }}
-                
-                />
-                <ImageButton
-                    source={require('../assets/lib.png')}
-                    onPress={() => {props.navigation.navigate({routeName: 'Video'})}}
-                />
-                <ImageButton
-                    source={require('../assets/cog.png')}
-                    onPress={() => {props.navigation.navigate({routeName: 'Settings'})}}
-                />
+    render(){
+        return(
+            <View style={styles.screen}>
+                <View style={styles.buttonContainer}>
+                    <ImageButton
+                        source={require('../assets/cam.png')}
+                        onPress={() => {
+                            this.props.navigation.navigate({routeName: 'Stream'})
+                            
+                        }}
+                    />
+                    <ImageButton
+                        source={require('../assets/lib.png')}
+                        onPress={() => {this.props.navigation.navigate({routeName: 'Video'})}}
+                    />
+                    <ImageButton
+                        source={require('../assets/cog.png')}
+                        onPress={() => {this.props.navigation.navigate('Settings', {name: 'EVAN'})}}
+                    />
+                </View>
             </View>
-        </View>
-    );
+        );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -46,4 +53,4 @@ const styles = StyleSheet.create({
     },
 }); 
 
-export default HomeScreen; 
+//export default HomeScreen; 
