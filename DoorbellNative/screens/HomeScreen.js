@@ -1,6 +1,6 @@
 import React from 'react'; 
 import {View, Text, StyleSheet, Button} from 'react-native'; 
-
+import io from 'socket.io-client'; 
 import ImageButton from '../components/ImageButton';
 
 export default class HomeScreen extends React.Component {
@@ -27,6 +27,7 @@ export default class HomeScreen extends React.Component {
             this.socket.emit('button_confirmed'); 
         });
     }
+
     componentWillUnmount () {
         this.socket.close();
     }  
