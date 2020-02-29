@@ -5,18 +5,32 @@ import ImageButton from '../components/ImageButton';
 
 import Video from 'react-native-video';
 
-const StreamScreen = props => {
+/*
+export default class StreamScreen extends React.Component {
+    // If you don't initialize state and don't bind methods, you do not need constructor
+    constructor(props){
+        // Called Before Mouted
+        super (props); 
+        // this.whatever
+    }
 
-    return(
-        <View style={styles.screen}>
-            <Text>This is the stream view</Text>
-            <View style={styles.buttonContainer}>
-                <ImageButton>SNAPSHOT</ImageButton>
-                <ImageButton>SPEAK</ImageButton>
-                <ImageButton>UNLOCK</ImageButton>
+}
+*/
+
+export default class StreamScreen extends React.Component {
+    render() {
+        return(
+            <View style={styles.screen}>
+                <Text>This is the stream view</Text>
+                <View style={styles.buttonContainer}>
+                    <ImageButton>SNAPSHOT</ImageButton>
+                    <ImageButton>SPEAK</ImageButton>
+                    <ImageButton>UNLOCK</ImageButton>
+                </View>
             </View>
-        </View>
-    );
+        );
+    }
+
 }
 
 const styles = StyleSheet.create({
@@ -33,4 +47,4 @@ const styles = StyleSheet.create({
     },
 }); 
 
-export default StreamScreen; 
+//export default StreamScreen; 
