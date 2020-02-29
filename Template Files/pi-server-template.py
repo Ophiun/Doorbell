@@ -22,9 +22,10 @@ def connect(sid, environ):
 def disconnect(sid):
     print('disconnect ', sid)
     
-@sio.on('event_name')
+@sio.on('button_press')
 def another_event(sid):
-    print('snapshot request received')
+    print('button_press_recieved')
+    sio.emit('button_press_recieved')
 
 @sio.on('another_event_name')
 def another_event(sid):
