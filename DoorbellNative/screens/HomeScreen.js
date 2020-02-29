@@ -17,6 +17,7 @@ export default class HomeScreen extends React.Component {
 
     componentDidMount () {
         this.setState({status: 'mounted'});
+        // Check IP to mach ip of pie
         this.socket = io('http://192.168.0.26:9000', {transports: ['websocket']});  
         this.socket.on('button_press_recieved', () => {
             this.setState({status: 'Recieved'});
