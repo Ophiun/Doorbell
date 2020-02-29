@@ -7,25 +7,25 @@ export default class HomeScreen extends React.Component {
     
     // Constructor 
     constructor(props){
-        super(props); 
-
-         
+        super(props);  
+        this.state = { 
+            status: 'connected'
+        }
+        this.buttonPress = this.buttonPress.bind(this);
+        //this.connect = this.connect.bind(this);
     }
+
     componentDidMount () {
-        this.connect();
-
+        this.setState({status: 'mounted'});
+        this.socket = io('http://192.168.0.26:9000', {transports: ['websocket']});  
+        this.socket.on('button_press_recieved', () => {
+            this.setState({status: 'Recieved'});
+        });
     }
 
-    connect() {
-        // Return Socket.io Object 
-        this.socket = io('https://192.168.0.108:9000');   
-        this.socket.emit('Hi DICK');
-        this.socket.on ('button_press', () => {
-            // handle code 
-            // throw push 
-            // Ack 
-            this.socket.emit('button_confirmed'); 
-        });
+    buttonPress() {
+        this.socket.emit('button_press');
+        this.setState({status: 'sent'});
     }
 
     componentWillUnmount () {
@@ -37,6 +37,8 @@ export default class HomeScreen extends React.Component {
         return(
             <View style={styles.screen}>
                 <View style={styles.buttonContainer}>
+                    <Text> {this.state.status}</Text>
+                    <Button title='CONNECT' onPress={() => this.buttonPress()}/>
                     <ImageButton
                         source={require('../assets/cam.png')}
                         onPress={() => {
