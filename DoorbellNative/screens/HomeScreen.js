@@ -12,6 +12,7 @@ export default class HomeScreen extends React.Component {
             status: 'connected'
         }
         this.buttonPress = this.buttonPress.bind(this);
+        this.dispatcher = this.dispatcher.bind(this);
         //this.connect = this.connect.bind(this);
     }
 
@@ -29,6 +30,12 @@ export default class HomeScreen extends React.Component {
         this.setState({status: 'sent'});
     }
 
+    dispatcher(signal){
+        this.socket.emit(signal);
+        let out = signal + "::sent";
+        this.setState({status: {out}})
+    }
+
     componentWillUnmount () {
         this.socket.close();
     }  
@@ -39,7 +46,7 @@ export default class HomeScreen extends React.Component {
             <View style={styles.screen}>
                 <View style={styles.buttonContainer}>
                     <Text> {this.state.status}</Text>
-                    <Button title='CONNECT' onPress={() => this.buttonPress()}/>
+                    <Button title='CONNECT' onPress={() => this.dispatcher('button_press')}/>
                     <ImageButton
                         source={require('../assets/cam.png')}
                         onPress={() => {
