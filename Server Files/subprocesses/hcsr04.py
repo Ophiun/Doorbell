@@ -66,7 +66,7 @@ def distance():
     return distance
 
 def handleExit():
-    print('received exit')
+    print('received exit - ultrasonic')
     sio.disconnect()
     sys.exit();
 

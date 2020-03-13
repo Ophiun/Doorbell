@@ -11,7 +11,7 @@ import time
 
 
 sio = socketio.Client();
-sio.connect('http://192.168.22:9000'); #can customize ip and port if you want
+sio.connect('http://localhost:9000'); #can customize ip and port if you want
 #localhost shouldnt have to be modified since the subprocesses are ran on the same pi.
 #Streaming httpserver will runs on 8000 (streamTest.py)
 
@@ -29,7 +29,6 @@ def connect_error():
 @sio.event
 def disconnect():
     print("I'm disconnected!")
-    exit()
 
 @sio.on('AudioRecod') #the function directly underneath this statement is the event handler
 def record_event(sid):

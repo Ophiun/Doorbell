@@ -31,12 +31,14 @@ def another_event(sid):
 @sio.event
 def disconnect():
     print("I'm disconnected!")
+
 def handleExit():
-    print('received exit')
+    print('received exit - button')
     sio.disconnect()
     sys.exit();
 
 while True: #change statment to get input from APP
+    signal.signal(signal.SIGTERM,handleExit)
     input_state = GPIO.input(ButtonPin)
     if input_state == False:
         print("Button Pressed!")

@@ -12,9 +12,9 @@ app = socketio.WSGIApp(sio, static_files={
 })
 print('starting streaming subprocess')
 #start hardware subprocesses
-streaming = subprocess.Popen(["python3","./subprocesses/streaming.py"])
-#ultrasonic = subprocess.Popen(["python3","./subprocesses/hcsr04.py"])
-#button = subprocess.Popen(["python3","./subprocesses/button.py"])
+#streaming = subprocess.Popen(["python3","./subprocesses/streaming.py"])
+ultrasonic = subprocess.Popen(["python3","./subprocesses/hcsr04.py"])
+button = subprocess.Popen(["python3","./subprocesses/button.py"])
 
 @sio.event
 def connect(sid, environ):
@@ -58,16 +58,16 @@ def another_event(sid,data):
 def another_event(sid):
     print('nfc connection event received')
 
-@sio.on('join_client_room'):
+@sio.on('join_client_room')
 def another_event(sid):
     sio.enter_room(sid,'client');
     sio.emit('client_join',room='client');
 
 def exit_handler():
     print('exit handler')
-    streaming.terminate();
-    #ultrasonic.terminate();
-    #button.terminate();
+    #streaming.terminate();
+    ultrasonic.terminate();
+    button.terminate();
 
 atexit.register(exit_handler);
 

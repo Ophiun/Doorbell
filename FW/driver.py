@@ -6,12 +6,10 @@
 
 
 import socketio
-import subprocess
 import time
 
-
 sio = socketio.Client();
-sio.connect('http://192.168.22:9000'); #can customize ip and port if you want
+sio.connect('http://192.168.2.22:9000'); #can customize ip and port if you want
 #localhost shouldnt have to be modified since the subprocesses are ran on the same pi.
 #Streaming httpserver will runs on 8000 (streamTest.py)
 
@@ -29,18 +27,12 @@ def connect_error():
 @sio.event
 def disconnect():
     print("I'm disconnected!")
-    exit()
 
-@sio.on('AudioRecod') #the function directly underneath this statement is the event handler
+@sio.on('AudioRecord') #the function directly underneath this statement is the event handler
 def record_event(sid):
-    print('Audio_Recording')
-    sio.emit('Started_Audio_Recording'); #emit a socketio event to raspberry pi server
-    #record using usbmic
-    subprocess.call("arecord --device=hw:1,0 --formatS16_LE --rate 44100 -V mono -c1 voice.wav", shell=True)
+    print('Driver file handled audio record event.')
 
-
-
-
-
+input('input\n')
+sio.emit('another_event_name')
 
 

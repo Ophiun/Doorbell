@@ -13,8 +13,8 @@ app = socketio.WSGIApp(sio, static_files={
 print('starting streaming subprocess')
 #start hardware subprocesses
 #streaming = subprocess.Popen(["python3","./subprocesses/streaming.py"])
-#ultrasonic = subprocess.Popen(["python3","./subprocesses/hcsr04.py"])
-#button = subprocess.Popen(["python3","./subprocesses/button.py"])
+ultrasonic = subprocess.Popen(["python3","./subprocesses/hcsr04.py"])
+button = subprocess.Popen(["python3","./subprocesses/button.py"])
 
 @sio.event
 def connect(sid, environ):
@@ -34,7 +34,7 @@ def another_event(sid):
 @sio.on('stream_snapshot_request')
 def another_event(sid):
     print('snapshot request received')
-    streaming.send_signal(10)
+   # streaming.send_signal(10)
 
 @sio.on('join_client_room')
 def another_event(sid):
@@ -78,8 +78,8 @@ def another_event(sid):
 def exit_handler():
     print('exit handler')
     #streaming.terminate();
-    #ultrasonic.terminate();
-    #button.terminate();
+    ultrasonic.terminate();
+    button.terminate();
 
 atexit.register(exit_handler);
 
