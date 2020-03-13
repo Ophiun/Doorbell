@@ -36,7 +36,7 @@ def another_event(sid):
     print('snapshot request received')
     streaming.send_signal(10)
 
-@sio.on('join_client_room'):
+@sio.on('join_client_room')
 def another_event(sid):
     sio.enter_room(sid,'client');
     sio.emit('client_join',room='client');
