@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # RS_UltraSonic.py - Ultrasonic Sensor Class for the Raspberry Pi 
 #
 # 15 March 2017 - 1.0 Original Issue
@@ -18,16 +17,21 @@ sio.connect('http://localhost:9000');
 @sio.event
 def connect():
     print("Connected")
-    sio.emit('join_subprocesses');
 
 @sio.on('new_subprocess')
 def another_event(sid):
-    print('We have joined the subprocess room')
+    print('We have joined the subprocess room - ultrasonic')
 
 @sio.on('ultra_response')
 def another_event(sid):
     print('Ultrasonic Response Received')
  
+@sio.on('subprocess_leave')
+def event():
+    print('received sio exit - button')
+    sio.disconnect()
+    sys.exit();
+
 #GPIO Mode (BOARD / BCM)
 GPIO.setmode(GPIO.BCM)
  
@@ -66,17 +70,18 @@ def distance():
     return distance
 
 def handleExit():
-    print('received exit')
+    print('received exit - ultrasonic')
     sio.disconnect()
     sys.exit();
 
 if __name__ == '__main__':
+    sio.emit('join_subprocesses');
     signal.signal(signal.SIGTERM,handleExit)
     try:
         while True:
             dist = distance()
             print ("Measured Distance = %.1f cm" % dist)
-            sio.emit('ultra_measure',{'distance':dist})
+            #sio.emit('ultra_measure',{'distance':dist})
             time.sleep(1)
  
         # Reset by pressing CTRL + C

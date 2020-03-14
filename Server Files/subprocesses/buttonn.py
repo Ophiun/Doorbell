@@ -1,5 +1,6 @@
 import nfc
 import socketio
+import os, signal
 
 sio = socketio.Client();
 sio.connect('http://localhost:9000');
@@ -18,11 +19,10 @@ GPIO.setup(LedPin, GPIO.OUT) #not working at the moment
 @sio.event
 def connect():
     print("Connected")
-    sio.emit('join_subprocesses');
 
 @sio.on('new_subprocess')
 def another_event(sid):
-    print('We have joined the subprocess room')
+    print('We have joined the subprocess room - button')
 
 @sio.on('button_response')
 def another_event(sid):
@@ -31,12 +31,21 @@ def another_event(sid):
 @sio.event
 def disconnect():
     print("I'm disconnected!")
-def handleExit():
-    print('received exit')
+
+@sio.on('subprocess_leave')
+def event():
+    print('received sio exit - button')
     sio.disconnect()
     sys.exit();
 
+def handleExit():
+    print('received exit - button')
+    sio.disconnect()
+    sys.exit();
+
+sio.emit('join_subprocesses');
 while True: #change statment to get input from APP
+    signal.signal(signal.SIGTERM,handleExit)
     input_state = GPIO.input(ButtonPin)
     if input_state == False:
         print("Button Pressed!")
