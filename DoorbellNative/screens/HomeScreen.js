@@ -12,6 +12,7 @@ export default class HomeScreen extends React.Component {
             status: 'connected'
         }
         this.buttonPress = this.buttonPress.bind(this);
+        this._dispatch = this._dispatch.bind(this); 
         //this.connect = this.connect.bind(this);
     }
 
@@ -28,6 +29,11 @@ export default class HomeScreen extends React.Component {
         this.socket.emit('button_press');
         this.setState({status: 'sent'});
     }
+    _dispatch(message, data){
+        var out = 'sent: ' + message;
+        this.socket.emit({message}); 
+        this.setState({status: out});
+    }
 
     componentWillUnmount () {
         this.socket.close();
@@ -39,21 +45,27 @@ export default class HomeScreen extends React.Component {
             <View style={styles.screen}>
                 <View style={styles.buttonContainer}>
                     <Text> {this.state.status}</Text>
-                    <Button title='CONNECT' onPress={() => this.buttonPress()}/>
+                    <Button title='CONNECT' onPress={() => this.dispatch('button_press', 0)}/>
                     <ImageButton
                         source={require('../assets/cam.png')}
                         onPress={() => {
-                            this.props.navigation.navigate({routeName: 'Stream'})
-                            
+                            this.props.navigation.navigate('Stream', {dispatch: this._dispatch})  
                         }}
                     />
                     <ImageButton
                         source={require('../assets/lib.png')}
-                        onPress={() => {this.props.navigation.navigate({routeName: 'Video'})}}
+                        onPress={() => {
+                            this.props.navigation.navigate('Video', {dispatch: this._dispatch})
+                        }}
                     />
                     <ImageButton
                         source={require('../assets/cog.png')}
-                        onPress={() => {this.props.navigation.navigate('Settings', {name: 'EVAN'})}}
+                        onPress={() => {
+                            this.props.navigation.navigate('Settings', {
+                                dispatch: this._dispatch, 
+                                name: 'Evan D'
+                            })
+                        }}
                     />
                 </View>
             </View>

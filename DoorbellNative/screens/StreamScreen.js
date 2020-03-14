@@ -23,9 +23,15 @@ export default class StreamScreen extends React.Component {
             <View style={styles.screen}>
                 <Text>This is the stream view</Text>
                 <View style={styles.buttonContainer}>
-                    <ImageButton>SNAPSHOT</ImageButton>
-                    <ImageButton>SPEAK</ImageButton>
-                    <ImageButton>UNLOCK</ImageButton>
+                    <ImageButton >
+                        SNAPSHOT
+                    </ImageButton>
+                    <ImageButton>
+                        SPEAK
+                    </ImageButton>
+                    <ImageButton onPress={() => this.props.navigation.state.params.dispatch('turn_off', 0)}>
+                        UNLOCK
+                    </ImageButton>
                 </View>
             </View>
         );
