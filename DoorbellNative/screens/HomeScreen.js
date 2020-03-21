@@ -1,47 +1,4 @@
-import React from 'react'; 
-import {View, Text, StyleSheet, Button} from 'react-native'; 
 
-import ImageButton from '../components/ImageButton';
-
-const HomeScreen = props => {
-
-    return(
-        <View style={styles.screen}>
-            
-            <View style={styles.buttonContainer}>
-                <ImageButton
-                    source={require('../assets/cam.png')}
-                    onPress={() => {props.navigation.navigate({routeName: 'Stream'})}}
-                />
-                <ImageButton
-                    source={require('../assets/lib.png')}
-                    onPress={() => {props.navigation.navigate({routeName: 'Video'})}}
-                />
-                <ImageButton
-                    source={require('../assets/cog.png')}
-                    onPress={() => {props.navigation.navigate({routeName: 'Settings'})}}
-                />
-            </View>
-        </View>
-    );
-}
-
-const styles = StyleSheet.create({
-    screen: {
-        flex: 1, 
-        padding: 10, 
-        alignItems: 'center' 
-    }, 
-    buttonContainer: {
-        flexDirection: 'column', 
-        justifyContent: 'space-around', 
-        marginTop: 20, 
-        width: 100, 
-        maxWidth: '80%'
-    },
-}); 
-
-export default HomeScreen; 
 import React from 'react'; 
 import {View, Text, StyleSheet, Button} from 'react-native'; 
 import io from 'socket.io-client'; 
@@ -56,6 +13,7 @@ export default class HomeScreen extends React.Component {
             status: 'connected'
         }
         this.buttonPress = this.buttonPress.bind(this);
+        this._dispatch = this._dispatch.bind(this); 
         //this.connect = this.connect.bind(this);
     }
 
@@ -72,6 +30,11 @@ export default class HomeScreen extends React.Component {
         this.socket.emit('button_press');
         this.setState({status: 'sent'});
     }
+    _dispatch(message, data){
+        var out = 'sent: ' + message;
+        this.socket.emit({message}); 
+        this.setState({status: out});
+    }
 
     componentWillUnmount () {
         this.socket.close();
@@ -83,21 +46,27 @@ export default class HomeScreen extends React.Component {
             <View style={styles.screen}>
                 <View style={styles.buttonContainer}>
                     <Text> {this.state.status}</Text>
-                    <Button title='CONNECT' onPress={() => this.buttonPress()}/>
+                    <Button title='CONNECT' onPress={() => this._dispatch('button_press', 0)}/>
                     <ImageButton
                         source={require('../assets/cam.png')}
                         onPress={() => {
-                            this.props.navigation.navigate({routeName: 'Stream'})
-                            
+                            this.props.navigation.navigate('Stream', {dispatch: this._dispatch})  
                         }}
                     />
                     <ImageButton
                         source={require('../assets/lib.png')}
-                        onPress={() => {this.props.navigation.navigate({routeName: 'Video'})}}
+                        onPress={() => {
+                            this.props.navigation.navigate('Video', {dispatch: this._dispatch})
+                        }}
                     />
                     <ImageButton
                         source={require('../assets/cog.png')}
-                        onPress={() => {this.props.navigation.navigate('Settings', {name: 'EVAN'})}}
+                        onPress={() => {
+                            this.props.navigation.navigate('Settings', {
+                                dispatch: this._dispatch, 
+                                name: 'Evan D'
+                            })
+                        }}
                     />
                 </View>
             </View>
