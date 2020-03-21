@@ -8,6 +8,11 @@ import logging
 import socketserver
 from threading import Condition
 from http import server
+import signal
+import socketio
+
+sio = socketio.Client();
+sio.connect('http://localhost:9000');
 
 PAGE="""\
 <html>
@@ -20,6 +25,34 @@ PAGE="""\
 </body>
 </html>
 """
+@sio.event
+def connect():
+    print("Connected")
+
+@sio.on('new_subprocess')
+def another_event(sid):
+    print('We have joined the subprocess room - streaming')
+
+@sio.event
+def disconnect():
+    print("I'm disconnected!")
+
+@sio.on('subprocess_leave')
+def event():
+    print('received sio exit - streaming')
+    sio.disconnect()
+    sys.exit();
+
+@sio.on('stream_exit')
+def event():
+    print('Stream told to terminate stream test')
+    sio.disconnect()
+    sys.exit()
+
+def handleExit():
+    print('received exit - streaming')
+    sio.disconnect();
+    sys.exit();
 
 class StreamingOutput(object):
     def __init__(self):

@@ -81,8 +81,8 @@ if __name__ == '__main__':
         while True:
             dist = distance()
             print ("Measured Distance = %.1f cm" % dist)
-            #sio.emit('ultra_measure',{'distance':dist})
-            time.sleep(1)
+            sio.emit('ultra_measure',{'distance':dist})
+            time.sleep(5)
  
         # Reset by pressing CTRL + C
     except KeyboardInterrupt:

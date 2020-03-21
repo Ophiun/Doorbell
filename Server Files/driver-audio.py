@@ -12,8 +12,8 @@ sio = socketio.Client();
 sio.connect('http://192.168.2.22:9000'); #can customize ip and port if you want
 #localhost shouldnt have to be modified since the subprocesses are ran on the same pi.
 #Streaming httpserver will runs on 8000 (streamTest.py)
-#predefined event handler, occurs when successful connection
 
+#predefined event handler, occurs when successful connection
 @sio.event
 def connect():
     print("Connected")

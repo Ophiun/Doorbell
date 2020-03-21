@@ -12,10 +12,11 @@ app = socketio.WSGIApp(sio, static_files={
 })
 print('starting streaming subprocess')
 #start hardware subprocesses
-#streaming = subprocess.Popen(["python3","./subprocesses/streaming.py"])
-ultrasonic = subprocess.Popen(["python3","./subprocesses/hcsr04.py"])
-button = subprocess.Popen(["python3","./subprocesses/buttonn.py"])
+#streaming = subprocess.Popen(["python3","./subprocesses/streamTest.py"])
 
+ultrasonic = subprocess.Popen(["python3","./subprocesses/hcsr04.py"])
+button = subprocess.Popen(["python3","./button.py"])
+streaming = None;
 @sio.event
 def connect(sid, environ):
     print('connection: ', sid)
@@ -24,20 +25,9 @@ def connect(sid, environ):
 def disconnect(sid):
     print('disconnect ', sid)
 
-#Events emitted from app
-@sio.on('stream_request')
-def another_event(sid):
-    print('Picture Request Received')
-    print('emitting response')
-    sio.emit('stream_response',room=sid)
-    
-@sio.on('stream_snapshot_request')
-def another_event(sid):
-    print('snapshot request received')
-    streaming.send_signal(10)
-
 @sio.on('join_client_room')
 def another_event(sid):
+    print("client room join request");
     sio.enter_room(sid,'client');
     sio.emit('client_join',room='client');
 
@@ -46,28 +36,59 @@ def another_event(sid):
     sio.enter_room(sid,'subprocesses');
     sio.emit('new_subprocess',room='subprocesses')
 
+#Events emitted from app
+@sio.on('stream_snapshot_request')
+def stream_snapshot_request_handler(sid):
+    print('snapshot request received')
+
+@sio.on('stream_start')
+def stream_start_handler(sid):
+    global streaming;
+    print("Starting stream")
+    if(streaming == None):
+        streaming = subprocess.Popen(["python3","./subprocesses/streamTest.py"])
+        sio.emit('stream_start_response',room='client');
+    else:
+        print("Stream process is already open")
+        sio.emit('stream_start_response',room='client');
+
+
+@sio.on('stream_leave')
+def stream_leave_handler(sid):
+    global streaming;
+    sio.emit('stream_exit');
+    print("Killing stream")
+    streaming.kill();
+    streaming = None
+    sio.emit('stream_leave_response',room='client')
+
+@sio.on('ultra_measure')
+def ultra_measure_handler(sid,data):
+    print('ultrasonic measurement received');
+    print(data)
+
 @sio.on('button')
-def another_event(sid):
+def button_handler(sid):
     print('Button was pressed, received emit')
     sio.emit('button_response');
 
 @sio.on('unlock_request')
-def another_event(sid):
+def unlock_request_handler(sid):
     print('unlock was pressed, received emit from app')
     sio.emit('unlock_request');
 
 @sio.on('lock_request')
-def another_event(sid):
+def lock_request_handler(sid):
     print('lock was pressed, received emit from app')
     sio.emit('lock_request');
 
 @sio.on('unlock_response')
-def another_event(sid):
+def unlock_response_handler(sid):
     print('unlock was completed, received emit from bluetooth')
     sio.emit('unlock_response');
 
 @sio.on('lock_response')
-def another_event(sid):
+def lock_response_handler(sid):
     print('lock was pressed, received emit from bluetooth')
     sio.emit('lock_response');
 
