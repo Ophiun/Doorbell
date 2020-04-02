@@ -1,6 +1,6 @@
 
 import React from 'react'; 
-import {View, Text, StyleSheet, Button} from 'react-native'; 
+import {View, Text, StyleSheet, Button, ScrollView} from 'react-native'; 
 import io from 'socket.io-client'; 
 import ImageButton from '../components/ImageButton';
 
@@ -44,7 +44,9 @@ export default class HomeScreen extends React.Component {
     render(){
         return(
             <View style={styles.screen}>
+                <ScrollView>
                 <View style={styles.buttonContainer}>
+                    
                     <Text> {this.state.status}</Text>
                     <Button title='CONNECT' onPress={() => this._dispatch('button_press', 0)}/>
                     <ImageButton
@@ -68,7 +70,16 @@ export default class HomeScreen extends React.Component {
                             })
                         }}
                     />
+                    <ImageButton
+                        source={require('../assets/cog.png')}
+                        onPress={() => {
+                            this.props.navigation.navigate('Webview', {
+                                dispatch: this._dispatch, 
+                            })
+                        }}
+                    />
                 </View>
+                </ScrollView>
             </View>
         );
     }
