@@ -13,11 +13,12 @@ app = socketio.WSGIApp(sio, static_files={
 print('starting streaming subprocess')
 # start hardware subprocesses
 #streaming = subprocess.Popen(["python3","./subprocesses/streamTest.py"])
-streaming = subprocess.Popen(
-            ["node", "./audio/server"])
+
 ultrasonic = None
 button = None;
 streaming = None
+streaming = subprocess.Popen(
+            ["node", "./audio/server"])
 @sio.event
 def connect(sid, environ):
     print('connection: ', sid)
@@ -112,7 +113,6 @@ def lock_response_handler(sid):
 # @sio.on('nfc_connection')
 # def another_event(sid):
 #     print('nfc connection event received')
-
 
 def exit_handler():
     print('exit handler - subprocess')
