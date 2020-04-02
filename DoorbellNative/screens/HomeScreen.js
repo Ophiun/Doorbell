@@ -70,14 +70,6 @@ export default class HomeScreen extends React.Component {
                             })
                         }}
                     />
-                    <ImageButton
-                        source={require('../assets/cog.png')}
-                        onPress={() => {
-                            this.props.navigation.navigate('Webview', {
-                                dispatch: this._dispatch, 
-                            })
-                        }}
-                    />
                 </View>
                 </ScrollView>
             </View>
